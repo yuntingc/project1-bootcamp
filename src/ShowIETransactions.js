@@ -10,11 +10,9 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
+  backgroundColor: "#f6f6f6",
   padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary,
 }));
 
 class ShowIETransactions extends React.Component {
@@ -31,11 +29,12 @@ class ShowIETransactions extends React.Component {
             <Item
               sx={{
                 width: 250,
+                userSelect: "none",
               }}
               // onClick={this.props.onClick}
             >
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <Box>{date}</Box>
+                <Box sx={{ fontStyle: "italic" }}>{date}</Box>
 
                 <Box
                   sx={{
@@ -51,7 +50,7 @@ class ShowIETransactions extends React.Component {
                       justifyContent: "space-around",
                     }}
                   >
-                    <Box>{categoryIconMapping[category]}</Box>
+                    <Box sx={{ mr: 1 }}>{categoryIconMapping[category]}</Box>
                     <Box>{description}</Box>
                   </Box>
                   <Box>{type === "expense" ? "- " + amount : amount}</Box>
@@ -68,11 +67,11 @@ class ShowIETransactions extends React.Component {
   render() {
     //console.log("selectedTransactions: ", this.props.transactions);
     return (
-      <div>
+      <Box>
         <Stack spacing={2} sx={{ alignItems: "center" }}>
           {this.individualTransactions()}
         </Stack>
-      </div>
+      </Box>
     );
   }
 }

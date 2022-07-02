@@ -1,24 +1,6 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 class StackedBarChart extends React.Component {
   categoryArrByMonth(selectedType) {
@@ -40,15 +22,13 @@ class StackedBarChart extends React.Component {
       }
     });
 
-    //console.log(categoryArrByMonth);
     return categoryArrByMonth;
   }
 
   StackedBarData() {
     let expenseArrByMonth = this.categoryArrByMonth("expense");
     let incomeArrByMonth = this.categoryArrByMonth("income");
-
-    //console.log(incomeArrByMonth);
+    console.log(expenseArrByMonth);
 
     const labels = [
       "January",
@@ -83,8 +63,6 @@ class StackedBarChart extends React.Component {
       }
     }
 
-    //console.log(salaryDataset);
-
     let expenseCategories = [
       "food",
       "entertainment",
@@ -96,10 +74,9 @@ class StackedBarChart extends React.Component {
     ];
 
     for (let i = 1; i <= 12; i += 1) {
-      for (let j = 0; j < expenseCategories.length - 1; j += 1) {
+      for (let j = 0; j < expenseCategories.length; j += 1) {
         if (expenseArrByMonth[i]) {
           if (expenseCategories[j] === "food") {
-            //console.log(expenseArrByMonth[i][expenseCategories[j]]);
             foodDataset.push(expenseArrByMonth[i][expenseCategories[j]]);
           }
           if (expenseCategories[j] === "entertainment") {
@@ -129,7 +106,7 @@ class StackedBarChart extends React.Component {
           if (expenseCategories[j] === "entertainment") {
             entertainmentDataset.push(0);
           }
-          if (expenseCategories[j] === "shopp[jg") {
+          if (expenseCategories[j] === "shopping") {
             shoppingDataset.push(0);
           }
           if (expenseCategories[j] === "sports") {
@@ -148,19 +125,7 @@ class StackedBarChart extends React.Component {
       }
     }
 
-    console.log(foodDataset);
-
-    // each Data set is one category
-    // need to map data by category by months
-
-    //need to generate dataset for each category and stack
-    // label: cateogory, data: by month
-
-    // [ ]
-    // label: cat name
-    // data: [ 1 num for each month]
-    // background color: ...
-    // stack: income or expense
+    //console.log("others", othersDataset);
 
     const data = {
       labels,
@@ -168,54 +133,53 @@ class StackedBarChart extends React.Component {
         {
           label: "Salary",
           data: salaryDataset,
-          backgroundColor: "rgb(255, 99, 132)",
+          backgroundColor: "#52BE80",
           stack: "income",
         },
         {
           label: "Food",
           data: foodDataset,
-          backgroundColor: "rgb(75, 192, 192)",
+          backgroundColor: "#FF6384",
           stack: "expense",
         },
         {
           label: "Entertainment",
           data: entertainmentDataset,
-          backgroundColor: "rgb(53, 162, 235)",
+          backgroundColor: "#36A2EB",
           stack: "expense",
         },
         {
           label: "Shopping",
           data: shoppingDataset,
-          backgroundColor: "rgb(53, 162, 235)",
+          backgroundColor: "#FFCE56",
           stack: "expense",
         },
         {
           label: "Sports",
           data: sportsDataset,
-          backgroundColor: "rgb(84,95,129)",
+          backgroundColor: "#F39C12",
           stack: "expense",
         },
         {
           label: "Transport",
           data: transportDataset,
-          backgroundColor: "rgb(0,5,159)",
-          stack: "expense",
-        },
-        {
-          label: "Others",
-          data: othersDataset,
-          backgroundColor: "rgb(84, 100, 229)",
+          backgroundColor: "#A569BD",
           stack: "expense",
         },
         {
           label: "Utilities",
           data: utilitiesDataset,
-          backgroundColor: "rgb(53, 162, 235)",
+          backgroundColor: "#D4AC0D",
+          stack: "expense",
+        },
+        {
+          label: "Others",
+          data: othersDataset,
+          backgroundColor: "#B2BABB",
           stack: "expense",
         },
       ],
     };
-    console.log(data);
     return data;
   }
 
@@ -229,6 +193,7 @@ class StackedBarChart extends React.Component {
         datalabels: {
           display: true,
           color: "white",
+          font: { size: 10 },
         },
       },
       responsive: true,

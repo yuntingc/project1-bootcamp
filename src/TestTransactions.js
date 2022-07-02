@@ -208,6 +208,17 @@ const TestTransactions = [
     cardNum: "1111",
     rewardsCat: "online",
   },
+  {
+    id: "ttt",
+    date: "2022-07-01",
+    type: "expense",
+    category: "others",
+    description: "Gift",
+    amount: "500",
+    paymentMethod: "card",
+    cardNum: "1111",
+    rewardsCat: "online",
+  },
 ];
 
 export default TestTransactions;

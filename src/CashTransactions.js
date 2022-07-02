@@ -6,12 +6,18 @@ import { styled } from "@mui/material/styles";
 import { categoryIconMapping } from "./utils";
 import Divider from "@mui/material/Divider";
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
+const BalanceCard = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#fafafa",
   padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary,
+  width: 200,
+}));
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#f6f6f6",
+  padding: theme.spacing(1),
+  textAlign: "center",
+  width: 200,
 }));
 
 class CashTransactions extends React.Component {
@@ -41,15 +47,24 @@ class CashTransactions extends React.Component {
   }
 
   individualTransactions() {
-    const individualTransactions = this.getCashTransactions().map(
+    const sortedTransaction = this.getCashTransactions().sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+
+    const individualTransactions = sortedTransaction.map(
       ({ id, date, type, category, description, amount }, i) => {
         return (
           <Box id={id} key={id} onClick={this.props.onClick}>
             <Item>
               <Box
-                sx={{ display: "flex", flexDirection: "column", width: 200 }}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 200,
+                  userSelect: "none",
+                }}
               >
-                <Box>{date}</Box>
+                <Box sx={{ fontStyle: "italic" }}>{date}</Box>
                 <Box
                   sx={{
                     display: "flex",
@@ -64,7 +79,7 @@ class CashTransactions extends React.Component {
                       justifyContent: "space-around",
                     }}
                   >
-                    <Box>{categoryIconMapping[category]}</Box>
+                    <Box sx={{ mr: 1 }}>{categoryIconMapping[category]}</Box>
                     <Box>{description}</Box>
                   </Box>
                   <Box>{type === "expense" ? "- " + amount : amount}</Box>
@@ -80,22 +95,15 @@ class CashTransactions extends React.Component {
 
   render() {
     return (
-      <Box sx={{ justifyContent: "center" }}>
-        <Item>
+      <Box sx={{ m: 2 }}>
+        <BalanceCard>
           <h3>Cash</h3>
           <Divider />
           <div>Expense: {this.totalSum()}</div>
-        </Item>
+        </BalanceCard>
 
-        <Box sx={{ width: 200, m: 2 }}>
-          <h5>Transactions</h5>
-          <Stack
-            spacing={2}
-            sx={{ alignItems: "center", justifyContent: "center" }}
-          >
-            {this.individualTransactions()}
-          </Stack>
-        </Box>
+        <h5>Transactions</h5>
+        <Stack spacing={2}>{this.individualTransactions()}</Stack>
       </Box>
     );
   }

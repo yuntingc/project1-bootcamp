@@ -66,7 +66,7 @@ class NewTransaction extends React.Component {
                 Category
               </InputLabel>
               <NativeSelect
-                defaultValue={"others"}
+                defaultValue="others"
                 inputProps={{
                   name: "category",
                 }}
@@ -79,6 +79,7 @@ class NewTransaction extends React.Component {
                 <option value="transport">Transport</option>
                 <option value="utilities">Utilities</option>
                 <option value="others">Others</option>
+                <option value="salary">Salary</option>
               </NativeSelect>
             </FormControl>
           </Grid>

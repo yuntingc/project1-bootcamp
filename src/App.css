@@ -1,7 +1,19 @@
 .App {
   text-align: center;
+  width: 100%;
 }
 
+.Header {
+  color: rgba(66, 70, 100, 0.808);
+  font-size: 2rem;
+}
+
+.BarChart {
+  width: 100%;
+  max-width: 60rem;
+}
+
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -16,4 +28,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+}  */

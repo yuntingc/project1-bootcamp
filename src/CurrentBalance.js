@@ -6,11 +6,9 @@ import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
+  backgroundColor: "#fafafa",
   padding: theme.spacing(1),
   textAlign: "center",
-  color: theme.palette.text.secondary,
   width: 200,
 }));
 
@@ -47,7 +45,13 @@ class CurrentBalance extends React.Component {
 
   render() {
     return (
-      <Box sx={{ display: "flex", justifyContent: "space-evenly", m: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          m: 2,
+        }}
+      >
         <Item>
           <h3>Income</h3>
           <Divider />

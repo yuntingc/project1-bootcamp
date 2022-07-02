@@ -41,7 +41,7 @@ const getTransactions = (transactions, year, period) => {
     let transactionDate = new Date(transactions[i].date);
 
     // return transactions for a particular year
-    if (transactionDate.getFullYear() === year) {
+    if (transactionDate.getFullYear() == year) {
       // if all the months are selected, return all transactions for that year
       if (period === "jan-dec") {
         selectedTransactions.push(transactions[i]);

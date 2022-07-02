@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.png";
 import "./App.css";
 import { v4 as uuidv4 } from "uuid";
 
@@ -29,6 +28,17 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Container from "@mui/system/Container";
+import { styled } from "@mui/material/styles";
+
+const GraphContainer = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+  maxWidth: "10",
+}));
 
 class App extends React.Component {
   constructor(props) {
@@ -94,11 +104,19 @@ class App extends React.Component {
   }
 
   handleYearChange(e) {
+    console.log(e.target.value);
     this.setState({ selectedYear: e.target.value });
     this.handleRenderSelectedTransactions();
+    console.log(
+      this.state.selectedYear,
+      e.target.value,
+      this.state.selectedYear === e.target.value
+    );
   }
 
   handleMonthChange(e) {
+    console.log(e.target.value);
+
     this.setState({ selectedMonth: e.target.value });
     this.handleRenderSelectedTransactions();
   }
@@ -335,7 +353,9 @@ class App extends React.Component {
 
   render() {
     //console.log("alltransaction", this.state.allTransactions);
+    //console.log(this.state.selectedYear, this.state.selectedMonth);
     //console.log(this.state.selectedTransactions);
+
     return (
       <div className="App">
         {/* {Object.entries(this.state.currTransaction).map(([key, value]) => {
@@ -345,7 +365,8 @@ class App extends React.Component {
             </div>
           );
         })} */}
-        <h3>Spendiwise</h3>
+
+        <h3 className="Header">Spendiwise</h3>
         <DateComponent
           year={this.state.selectedYear}
           month={this.state.selectedMonth}
@@ -368,34 +389,48 @@ class App extends React.Component {
         {/* FOR INCOME/EXPENSE VIEW */}
 
         {this.state.selectedView === "income/expense" && (
-          <Box>
-            <CurrentBalance transactions={this.state.selectedTransactions} />
-            <Box sx={{ display: "block", justifyContent: "center" }}>
-              <Box>
+          <Box sx={{ display: "block" }}>
+            <CurrentBalance
+              className="BalanceCard"
+              transactions={this.state.selectedTransactions}
+            />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Box className="BarChart">
                 {this.state.selectedMonth === "jan-dec" && (
                   <StackedBarChart
-                    sx={{ width: 100 }}
                     transactions={this.state.selectedTransactions}
                   />
                 )}
+              </Box>
+              <Box sx={{ alignSelf: "center" }}>
+                <h5>Income/Expense by Category</h5>
               </Box>
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "row",
+                  mx: 1,
+                  flexWrap: "wrap",
+                  justifyContent: "center",
                 }}
               >
                 <Box>
                   <DonutChart
                     transactions={this.state.selectedTransactions}
-                    type="expense"
+                    type="income"
                   />
                 </Box>
 
                 <Box>
                   <DonutChart
                     transactions={this.state.selectedTransactions}
-                    type="income"
+                    type="expense"
                   />
                 </Box>
               </Box>
@@ -411,11 +446,13 @@ class App extends React.Component {
         {/* FOR REWARDS VIEW */}
         {this.state.selectedView === "rewards" && (
           <Box>
-            <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
-              <CashTransactions
-                transactions={this.state.selectedTransactions}
-                onClick={this.handleTransactionDetailsModalOpen}
-              />
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                flexWrap: "wrap",
+              }}
+            >
               <CardTransactions
                 transactions={this.state.selectedTransactions}
                 month={this.state.selectedMonth}
@@ -430,6 +467,10 @@ class App extends React.Component {
                 year={this.state.selectedYear}
                 selectedCard="2222"
                 cardType="amex"
+                onClick={this.handleTransactionDetailsModalOpen}
+              />
+              <CashTransactions
+                transactions={this.state.selectedTransactions}
                 onClick={this.handleTransactionDetailsModalOpen}
               />
             </Box>
@@ -466,14 +507,16 @@ class App extends React.Component {
             <Button onClick={this.handleEditFormSubmit}>Submit</Button>
           </DialogActions>
         </Dialog>
-        <Fab
-          color="primary"
-          aria-label="add"
-          sx={{ position: "absolute", top: 0, left: 0 }}
-          onClick={this.handleNewTransactionModalOpen}
-        >
-          <AddIcon />
-        </Fab>
+        <Box sx={{ position: "fixed", top: 25, left: 25 }}>
+          <Fab
+            color="primary"
+            aria-label="add"
+            sx={{ position: "absolute" }}
+            onClick={this.handleNewTransactionModalOpen}
+          >
+            <AddIcon />
+          </Fab>
+        </Box>
         <Dialog
           open={this.state.newTransactionModalOpen}
           onClose={this.handleNewTransactionModalClose}

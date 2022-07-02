@@ -1,4 +1,6 @@
 import React from "react";
+import { getKey, monthMapping } from "./utils.js";
+import "./App.css";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -12,9 +14,9 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 class DateComponent extends React.Component {
   render() {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Box>
-          <FormControl>
+      <Box>
+        <Box sx={{ my: 2 }}>
+          {/* <FormControl>
             <InputLabel id="demo-simple-select-label">Year</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -27,7 +29,18 @@ class DateComponent extends React.Component {
               <MenuItem value={2022}>2022</MenuItem>
               <MenuItem value={2023}>2023</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
+
+          <ButtonGroup
+            variant="outlined"
+            aria-label="text button group"
+            onClick={this.props.handleYearChange}
+            value={this.props.year}
+          >
+            <Button value={2021}>2021</Button>
+            <Button value={2022}>2022</Button>
+            <Button value={2023}>2023</Button>
+          </ButtonGroup>
         </Box>
         <Box>
           <ButtonGroup

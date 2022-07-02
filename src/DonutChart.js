@@ -43,8 +43,27 @@ class DonutChart extends React.Component {
       datasets: [
         {
           data: donutData,
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-          hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+          backgroundColor: [
+            "#52BE80",
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#F39C12",
+            "#A569BD",
+            "#B2BABB",
+            "#D4AC0D",
+          ],
+          hoverBackgroundColor: [
+            "#52BE80",
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#F39C12",
+
+            "#A569BD",
+            "#B2BABB",
+            "#D4AC0D",
+          ],
           borderWidth: 2,
         },
       ],
@@ -74,11 +93,15 @@ class DonutChart extends React.Component {
   render() {
     return (
       <div>
-        <Doughnut
-          data={this.donutData()}
-          options={this.donutOptions()}
-          plugins={[ChartDataLabels]}
-        />
+        {this.totalSum() ? (
+          <Doughnut
+            data={this.donutData()}
+            options={this.donutOptions()}
+            plugins={[ChartDataLabels]}
+          />
+        ) : (
+          ""
+        )}
       </div>
     );
   }
