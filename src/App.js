@@ -11,6 +11,11 @@ import ShowIETransactions from "./ShowIETransactions.js";
 import TransactionDetailsModal from "./TransactionDetailsModal.js";
 import EditTransaction from "./EditTransaction.js";
 import NewTransaction from "./NewTransaction.js";
+import CurrentBalance from "./CurrentBalance.js";
+import DonutChart from "./DonutChart.js";
+import StackedBarChart from "./StackedBarChart.js";
+import CashTransactions from "./CashTransactions";
+import CardTransactions from "./CardTransactions";
 
 // MUI
 import Modal from "@mui/material/Modal";
@@ -18,12 +23,12 @@ import Box from "@mui/material/Box";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import { toggleButtonGroupClasses } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 class App extends React.Component {
   constructor(props) {
@@ -68,6 +73,7 @@ class App extends React.Component {
     this.handleNewTransactionModalClose =
       this.handleNewTransactionModalClose.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleViewChange = this.handleViewChange.bind(this);
   }
 
   componentDidMount() {
@@ -323,6 +329,10 @@ class App extends React.Component {
     this.handleNewTransactionModalClose();
   }
 
+  handleViewChange(e) {
+    this.setState({ selectedView: e.target.value });
+  }
+
   render() {
     //console.log("alltransaction", this.state.allTransactions);
     //console.log(this.state.selectedTransactions);
@@ -345,11 +355,89 @@ class App extends React.Component {
         <h3>
           {this.state.selectedMonth.toUpperCase()} {this.state.selectedYear}
         </h3>
-        <h5>Transactions </h5>
-        <ShowIETransactions
-          transactions={this.state.selectedTransactions}
-          onClick={this.handleTransactionDetailsModalOpen}
-        />
+        <ToggleButtonGroup
+          color="primary"
+          value={this.state.selectedView}
+          exclusive
+          onChange={this.handleViewChange}
+        >
+          <ToggleButton value="income/expense">Income/Expense</ToggleButton>
+          <ToggleButton value="rewards">Rewards</ToggleButton>
+        </ToggleButtonGroup>
+
+        {/* FOR INCOME/EXPENSE VIEW */}
+
+        {this.state.selectedView === "income/expense" && (
+          <Box>
+            <CurrentBalance transactions={this.state.selectedTransactions} />
+            <Box sx={{ display: "block", justifyContent: "center" }}>
+              <Box>
+                {this.state.selectedMonth === "jan-dec" && (
+                  <StackedBarChart
+                    sx={{ width: 100 }}
+                    transactions={this.state.selectedTransactions}
+                  />
+                )}
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
+              >
+                <Box>
+                  <DonutChart
+                    transactions={this.state.selectedTransactions}
+                    type="expense"
+                  />
+                </Box>
+
+                <Box>
+                  <DonutChart
+                    transactions={this.state.selectedTransactions}
+                    type="income"
+                  />
+                </Box>
+              </Box>
+            </Box>
+            <h5>Transactions </h5>
+            <ShowIETransactions
+              transactions={this.state.selectedTransactions}
+              onClick={this.handleTransactionDetailsModalOpen}
+            />
+          </Box>
+        )}
+
+        {/* FOR REWARDS VIEW */}
+        {this.state.selectedView === "rewards" && (
+          <Box>
+            <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+              <CashTransactions
+                transactions={this.state.selectedTransactions}
+                onClick={this.handleTransactionDetailsModalOpen}
+              />
+              <CardTransactions
+                transactions={this.state.selectedTransactions}
+                month={this.state.selectedMonth}
+                year={this.state.selectedYear}
+                selectedCard="1111"
+                cardType="visa"
+                onClick={this.handleTransactionDetailsModalOpen}
+              />
+              <CardTransactions
+                transactions={this.state.selectedTransactions}
+                month={this.state.selectedMonth}
+                year={this.state.selectedYear}
+                selectedCard="2222"
+                cardType="amex"
+                onClick={this.handleTransactionDetailsModalOpen}
+              />
+            </Box>
+          </Box>
+        )}
+
+        {/* MODALS */}
+
         <Modal
           open={this.state.transactionDetailsModalOpen}
           onClose={this.handleTransactionDetailsModalClose}
