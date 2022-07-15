@@ -1,6 +1,4 @@
 import React from "react";
-
-// components
 import { categoryIconMapping } from "./utils";
 
 // MUI
@@ -20,7 +18,6 @@ class ShowIETransactions extends React.Component {
     const sortedTransaction = this.props.transactions.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
-    //console.log(sortedTransaction);
 
     const individualTransactions = sortedTransaction.map(
       ({ id, date, type, category, description, amount }, i) => {
@@ -31,7 +28,6 @@ class ShowIETransactions extends React.Component {
                 width: 250,
                 userSelect: "none",
               }}
-              // onClick={this.props.onClick}
             >
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Box sx={{ fontStyle: "italic" }}>{date}</Box>
@@ -65,7 +61,6 @@ class ShowIETransactions extends React.Component {
   }
 
   render() {
-    //console.log("selectedTransactions: ", this.props.transactions);
     return (
       <Box>
         <Stack spacing={2} sx={{ alignItems: "center" }}>

@@ -1,7 +1,8 @@
 import React from "react";
 import "chart.js/auto";
+
+// chartjs
 import { Doughnut } from "react-chartjs-2";
-//import { Chart } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 class DonutChart extends React.Component {

@@ -1,12 +1,13 @@
 import React from "react";
+import { categoryIconMapping, getTransactions } from "./utils";
+
+// MUI
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import LinearProgressWithLabel from "@mui/material/LinearProgress";
-import { categoryIconMapping } from "./utils";
 import Divider from "@mui/material/Divider";
-import { getTransactions } from "./utils.js";
 
 const BalanceCard = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fafafa",
@@ -68,14 +69,12 @@ class CardTransactions extends React.Component {
 
     let rewardsCategories = [];
     if (this.props.selectedCard === "1111") {
-      //console.log("select 1111");
       rewardsCategories = ["paywave", "online", "green", "others", "na"];
     } else {
-      //console.log("select 2222");
       rewardsCategories = ["all", "na"];
     }
 
-    transactions.forEach(({ id, description, rewardsCat, amount }) => {
+    transactions.forEach(({ rewardsCat, amount }) => {
       for (let i = 0; i < rewardsCategories.length - 1; i += 1) {
         if (rewardsCatObj[rewardsCategories[i]]) {
           if (rewardsCat === rewardsCategories[i]) {
@@ -94,12 +93,8 @@ class CardTransactions extends React.Component {
     return rewardsCatObj;
   }
 
-  // calculate category cashback for selected month
-  // returns an object value
-  // THIS GIVES NAN when summing up
   getMonthlyCategoryCashback(category, month) {
     // get monthly trasactions
-
     let monthlyExpensesTransactions = this.getMonthlyCardTransactions(month);
 
     // check total sum for that month
@@ -113,7 +108,6 @@ class CardTransactions extends React.Component {
     let categoryCashback = {};
 
     if (typeof monthlyRewardsCatObj[category] === "undefined") {
-      //console.log(monthlyRewardsCatObj[category], category);
       monthlyRewardsCatObj[category] = 0;
     }
 
@@ -140,7 +134,6 @@ class CardTransactions extends React.Component {
         Number(monthlyRewardsCatObj[category]) * 0.017;
     }
 
-    // console.log("categoryCashback", categoryCashback[category]);
     return categoryCashback[category];
   }
 

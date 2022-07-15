@@ -1,9 +1,11 @@
 import React from "react";
+import { categoryIconMapping } from "./utils";
+
+// MUI
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import { categoryIconMapping } from "./utils";
 import Divider from "@mui/material/Divider";
 
 const BalanceCard = styled(Paper)(({ theme }) => ({

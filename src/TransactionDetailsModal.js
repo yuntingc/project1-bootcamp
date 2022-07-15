@@ -1,7 +1,6 @@
 import React from "react";
 
 // MUI
-// import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -14,8 +13,6 @@ class TransactionDetailsModal extends React.Component {
   render() {
     const expenseTypeColor =
       this.props.currTransaction.type === "expense" ? "red" : "green";
-    console.log("viewing indiv transaction");
-    //console.log(this.props.currTransaction);
     return (
       <Box
         sx={{

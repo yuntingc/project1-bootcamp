@@ -1,4 +1,6 @@
 import React from "react";
+
+// chartjs
 import { Bar } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
@@ -124,8 +126,6 @@ class StackedBarChart extends React.Component {
         }
       }
     }
-
-    //console.log("others", othersDataset);
 
     const data = {
       labels,

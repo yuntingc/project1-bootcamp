@@ -28,17 +28,6 @@ import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import Container from "@mui/system/Container";
-import { styled } from "@mui/material/styles";
-
-const GraphContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  maxWidth: "10",
-}));
 
 class App extends React.Component {
   constructor(props) {
@@ -97,7 +86,7 @@ class App extends React.Component {
       selectedYear: currYear,
       selectedMonth: currMonth,
       selectedView: "income/expense",
-      allTransactions: TestTransactions,
+      allTransactions: [], // TestTransactions,
     });
 
     this.handleRenderSelectedTransactions();
@@ -107,23 +96,14 @@ class App extends React.Component {
     console.log(e.target.value);
     this.setState({ selectedYear: e.target.value });
     this.handleRenderSelectedTransactions();
-    console.log(
-      this.state.selectedYear,
-      e.target.value,
-      this.state.selectedYear === e.target.value
-    );
   }
 
   handleMonthChange(e) {
-    console.log(e.target.value);
-
     this.setState({ selectedMonth: e.target.value });
     this.handleRenderSelectedTransactions();
   }
 
   handleRenderSelectedTransactions() {
-    console.log("render transaction");
-
     this.setState((prev) => ({
       selectedTransactions: getTransactions(
         prev.allTransactions,
@@ -134,18 +114,14 @@ class App extends React.Component {
   }
 
   handleTransactionDetailsModalOpen(e) {
-    console.log("viewing indiv transactions");
     this.setState({ transactionDetailsModalOpen: true });
 
     const clickedTransactionId =
       e.target.parentElement.parentElement.parentElement.id;
-    console.log(clickedTransactionId);
     // add in modal details to display
     for (let i = 0; i < this.state.selectedTransactions.length; i += 1) {
-      //console.log(this.state.selectedTransactions[i]);
       if (this.state.selectedTransactions[i].id === clickedTransactionId) {
         const transactionObj = this.state.selectedTransactions[i];
-        //console.log(transactionObj.id);
         this.setState({
           currTransaction: {
             indivTransactionModalOpen: true,
@@ -165,34 +141,26 @@ class App extends React.Component {
   }
 
   handleTransactionDetailsModalClose() {
-    console.log("closing indiv transactions view");
     this.setState({ transactionDetailsModalOpen: false });
   }
 
   handleEditModalOpen() {
-    console.log("in edit modal state");
-    console.log(this.state.allTransactions);
-    console.log(this.state.currTransaction);
     this.handleTransactionDetailsModalClose();
     this.setState({ editModalOpen: true });
   }
 
   handleEditModalClose() {
-    console.log("closing edit modal");
     this.setState({ editModalOpen: false });
   }
 
   handleDeleteTransaction() {
-    console.log("deleting transaction...");
     this.handleTransactionDetailsModalClose();
     const remainingTransactions = [];
     this.state.allTransactions.forEach((item) => {
-      if (item.id != this.state.currTransaction.id) {
+      if (item.id !== this.state.currTransaction.id) {
         remainingTransactions.push(item);
       }
     });
-
-    //console.log("remaining", remainingTransactions);
 
     this.setState({
       allTransactions: remainingTransactions,
@@ -270,19 +238,14 @@ class App extends React.Component {
   }
 
   handleEditFormSubmit(e) {
-    // this.handleTransactionDetailsModalClose();
-    console.log(this.state.currTransaction.id);
     const remainingTransactions = [];
-    console.log("yass");
-
     this.state.allTransactions.forEach((item) => {
       console.log(item);
-      if (item.id != this.state.currTransaction.id) {
+      if (item.id !== this.state.currTransaction.id) {
         remainingTransactions.push(item);
       }
     });
 
-    console.log(remainingTransactions);
     this.setState({
       allTransactions: remainingTransactions,
     });
@@ -306,7 +269,6 @@ class App extends React.Component {
   }
 
   handleNewTransactionModalOpen() {
-    console.log("new transaction modal open");
     this.setState({
       newTransactionModalOpen: true,
       currTransaction: {
@@ -324,7 +286,6 @@ class App extends React.Component {
   }
 
   handleNewTransactionModalClose() {
-    console.log("new transaction modal close");
     this.setState({ newTransactionModalOpen: false });
   }
 
@@ -352,20 +313,8 @@ class App extends React.Component {
   }
 
   render() {
-    //console.log("alltransaction", this.state.allTransactions);
-    //console.log(this.state.selectedYear, this.state.selectedMonth);
-    //console.log(this.state.selectedTransactions);
-
     return (
       <div className="App">
-        {/* {Object.entries(this.state.currTransaction).map(([key, value]) => {
-          return (
-            <div key={key}>
-              {key}: {value}
-            </div>
-          );
-        })} */}
-
         <h3 className="Header">Spendiwise</h3>
         <DateComponent
           year={this.state.selectedYear}

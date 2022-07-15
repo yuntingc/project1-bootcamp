@@ -1,4 +1,7 @@
 import React from "react";
+import { todayDate } from "./utils.js";
+
+// MUI
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import FormControl from "@mui/material/FormControl";
@@ -10,16 +13,12 @@ import FormLabel from "@mui/material/FormLabel";
 import InputLabel from "@mui/material/InputLabel";
 import NativeSelect from "@mui/material/NativeSelect";
 import Box from "@mui/material/Box";
-import { v4 as uuidv4 } from "uuid";
-
-import { getTransactions, todayDate } from "./utils.js";
 
 class NewTransaction extends React.Component {
   render() {
     console.log(this.props.value.id);
     return (
       <FormControl onSubmit={this.props.onSubmit}>
-        {/* <TextField name="id" value={this.props.value.id} /> */}
         <Grid container spacing={2.5}>
           <Grid item xs={12}>
             <Box sx={{ mt: 1 }}>
